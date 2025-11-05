@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html ng-app="studentApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Students Record</title>
+    <!-- Include AngularJS from CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <style>
+        table {
+            width: 50%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body ng-controller="StudentController">
+
+    <h2>Students Record</h2>
+
+    <input type="text" ng-model="newStudent.name" placeholder="Enter Name">
+    <input type="number" ng-model="newStudent.age" placeholder="Enter Age">
+    <button ng-click="addStudent()">Add Student</button>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="student in students">
+                <td>{{student.name}}</td>
+                <td>{{student.age}}</td>
+                <td><button ng-click="removeStudent($index)">Remove</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        // Define AngularJS app
+        var app = angular.module('studentApp', []);
+
+        app.controller('StudentController', function($scope) {
+            $scope.students = [];
+
+            // Add new student
+            $scope.addStudent = function() {
+                if($scope.newStudent && $scope.newStudent.name && $scope.newStudent.age) {
+                    $scope.students.push({
+                        name: $scope.newStudent.name,
+                        age: $scope.newStudent.age
+                    });
+                    $scope.newStudent = {}; // clear input
+                } else {
+                    alert("Please enter both Name and Age.");
+                }
+            };
+
+            // Remove student
+            $scope.removeStudent = function(index) {
+                $scope.students.splice(index, 1);
+            };
+        });
+    </script>
+
+</body>
+</html>

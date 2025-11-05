@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Patient Master Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input {
+      width: 300px;
+      padding: 5px;
+    }
+    .error {
+      color: red;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Patient Master Form</h2>
+  <form id="patientForm" onsubmit="return validateForm()">
+    <label>Patient ID:
+      <input type="text" id="patientId">
+      <span class="error" id="idError"></span>
+    </label>
+
+    <label>Patient Name:
+      <input type="text" id="patientName">
+      <span class="error" id="nameError"></span>
+    </label>
+
+    <label>Address:
+      <input type="text" id="address">
+      <span class="error" id="addressError"></span>
+    </label>
+
+    <label>City:
+      <input type="text" id="city">
+      <span class="error" id="cityError"></span>
+    </label>
+
+    <label>Contact Number:
+      <input type="text" id="contact">
+      <span class="error" id="contactError"></span>
+    </label>
+
+    <label>Date of Birth:
+      <input type="date" id="dob">
+      <span class="error" id="dobError"></span>
+    </label>
+
+    <br><br>
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    function validateForm() {
+      let isValid = true;
+
+      // Clear previous errors
+      document.querySelectorAll('.error').forEach(e => e.textContent = '');
+
+      // Patient ID: must be numeric
+      const id = document.getElementById("patientId").value.trim();
+      if (!/^\d+$/.test(id)) {
+        document.getElementById("idError").textContent = "Patient ID must be numeric.";
+        isValid = false;
+      }
+
+      // Patient Name: non-empty, only letters and space
+      const name = document.getElementById("patientName").value.trim();
+      if (!/^[a-zA-Z\s]+$/.test(name)) {
+        document.getElementById("nameError").textContent = "Enter a valid name (letters and spaces only).";
+        isValid = false;
+      }
+
+      // Address: non-empty
+      const address = document.getElementById("address").value.trim();
+      if (address === "") {
+        document.getElementById("addressError").textContent = "Address cannot be empty.";
+        isValid = false;
+      }
+
+      // City: non-empty, letters only
+      const city = document.getElementById("city").value.trim();
+      if (!/^[a-zA-Z\s]+$/.test(city)) {
+        document.getElementById("cityError").textContent = "Enter a valid city name.";
+        isValid = false;
+      }
+
+      // Contact Number: must be 10 digits
+      const contact = document.getElementById("contact").value.trim();
+      if (!/^\d{10}$/.test(contact)) {
+        document.getElementById("contactError").textContent = "Enter a valid 10-digit contact number.";
+        isValid = false;
+      }
+
+      // Date of Birth: not empty and not in the future
+      const dob = document.getElementById("dob").value;
+      const today = new Date().toISOString().split("T")[0];
+      if (dob === "" || dob > today) {
+        document.getElementById("dobError").textContent = "Enter a valid date of birth.";
+        isValid = false;
+      }
+
+      return isValid;
+    }
+  </script>
+
+</body>
+</html>
