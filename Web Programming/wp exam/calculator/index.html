@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>PHP Calculator Web Service</title>
+</head>
+<body>
+  <h2>Simple Calculator (PHP Web Service)</h2>
+
+  <form id="calcForm">
+    <input type="number" id="x" placeholder="Enter first number" required>
+    <select id="op">
+      <option value="add">Add (+)</option>
+      <option value="sub">Subtract (-)</option>
+      <option value="mul">Multiply (×)</option>
+      <option value="div">Divide (÷)</option>
+    </select>
+    <input type="number" id="y" placeholder="Enter second number" required>
+    <button type="submit">Calculate</button>
+  </form>
+
+  <h3>Result: <span id="result"></span></h3>
+
+  <script>
+    document.getElementById("calcForm").addEventListener("submit", function(e){
+      e.preventDefault();
+
+      const x = document.getElementById("x").value;
+      const y = document.getElementById("y").value;
+      const op = document.getElementById("op").value;
+
+      fetch(`service.php?op=${op}&x=${x}&y=${y}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.result !== undefined) {
+            document.getElementById("result").textContent = data.result;
+          } else {
+            document.getElementById("result").textContent = data.error;
+          }
+        })
+        .catch(() => {
+          document.getElementById("result").textContent = "Error connecting to service.";
+        });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+/* custom-style.css */
+
+h1 {
+  color: green; /* Heading text color as green */
+}
+
+p {
+  font-size: 13px; /* Paragraph font size 13px */
+  color: blue;     /* Text color as blue */
+}

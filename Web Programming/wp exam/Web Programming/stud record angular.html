@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html ng-app="studentApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Students Record</title>
+    <!-- Include AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f7f9fc;
+            color: #333;
+        }
+
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        input, button {
+            padding: 8px 12px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #007BFF;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            width: 70%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            background-color: white;
+        }
+
+        th {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px;
+        }
+
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .form-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body ng-controller="StudentController">
+
+    <h2>Students Record</h2>
+
+    <div class="form-container">
+        <input type="text" ng-model="newStudent.name" placeholder="Enter Name">
+        <input type="number" ng-model="newStudent.age" placeholder="Enter Age">
+        <button ng-click="addStudent()">Add Student</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="student in students">
+                <td>{{student.name}}</td>
+                <td>{{student.age}}</td>
+                <td><button style="background-color:#dc3545;" ng-click="removeStudent($index)">Remove</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        var app = angular.module('studentApp', []);
+
+        app.controller('StudentController', function($scope) {
+            $scope.students = [];
+
+            $scope.addStudent = function() {
+                if ($scope.newStudent && $scope.newStudent.name && $scope.newStudent.age) {
+                    $scope.students.push({
+                        name: $scope.newStudent.name,
+                        age: $scope.newStudent.age
+                    });
+                    $scope.newStudent = {}; // Clear input
+                } else {
+                    alert("Please enter both Name and Age.");
+                }
+            };
+
+            $scope.removeStudent = function(index) {
+                $scope.students.splice(index, 1);
+            };
+        });
+    </script>
+
+</body>
+</html>

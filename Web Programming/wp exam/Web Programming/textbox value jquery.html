@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Get Textbox Value with jQuery</title>
+    <!-- Include jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: lightgray;
+            color: black;
+            text-align: center;
+            margin-top: 100px;
+        }
+
+        h2 {
+            color: navy;
+        }
+
+        input[type="text"] {
+            padding: 8px 12px;
+            border: 1px solid gray;
+            border-radius: 4px;
+        }
+
+        input[type="text"]:focus {
+            border-color: blue;
+        }
+
+        button {
+            padding: 8px 14px;
+            background-color: blue;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: darkblue;
+        }
+
+        #displayValue {
+            margin-top: 20px;
+            font-weight: bold;
+            color: darkgreen;
+        }
+    </style>
+</head>
+<body>
+    <h2>Enter your name:</h2>
+    <input type="text" id="nameBox" placeholder="Enter name here">
+    <button id="getValueBtn">Get Value</button>
+
+    <p id="displayValue"></p>
+
+    <script>
+        // jQuery code
+        $(document).ready(function() {
+            $('#getValueBtn').click(function() {
+                var name = $('#nameBox').val().trim();
+                if (name === "") {
+                    $('#displayValue').text("Please enter your name.").css("color", "red");
+                } else {
+                    $('#displayValue').text("You entered: " + name).css("color", "darkgreen");
+                }
+            });
+        });
+    </script>
+</body>
+</html>

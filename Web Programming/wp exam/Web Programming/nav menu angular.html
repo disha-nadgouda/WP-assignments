@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html ng-app="menuApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Navigation Menu</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <style>
+        ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            gap: 20px;
+        }
+        li {
+            padding: 10px 20px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            outline: none;
+        }
+        .active {
+            background-color: #007BFF;
+            color: white;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body ng-controller="MenuController" tabindex="0" ng-keydown="handleKey($event)">
+
+    <h2>Navigation Menu</h2>
+    <ul>
+        <li ng-repeat="item in menuItems" 
+            ng-click="select(item)" 
+            ng-class="{active: selectedItem === item}"
+            tabindex="0">
+            {{item}}
+        </li>
+    </ul>
+
+    <p>Selected Menu: <strong>{{selectedItem}}</strong></p>
+
+    <script>
+        var app = angular.module('menuApp', []);
+
+        app.controller('MenuController', function($scope) {
+            $scope.menuItems = ['Home', 'About', 'Services', 'Contact'];
+            $scope.selectedIndex = 0;
+            $scope.selectedItem = $scope.menuItems[$scope.selectedIndex];
+
+            // Handle click
+            $scope.select = function(item) {
+                $scope.selectedItem = item;
+                $scope.selectedIndex = $scope.menuItems.indexOf(item);
+            };
+
+            // Handle Tab key press
+            $scope.handleKey = function(event) {
+                if (event.key === 'Tab') {
+                    event.preventDefault(); // Prevent browser focus change
+                    $scope.selectedIndex = ($scope.selectedIndex + 1) % $scope.menuItems.length;
+                    $scope.selectedItem = $scope.menuItems[$scope.selectedIndex];
+                    $scope.$apply();
+                }
+            };
+        });
+    </script>
+
+</body>
+</html>
